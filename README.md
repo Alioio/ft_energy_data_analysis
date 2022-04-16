@@ -38,6 +38,7 @@ Project Organization
     │   │
     │   ├── data           <- Scripts to download or generate data
     │   │   └── make_dataset.py
+    |   |   └── crawl_energy_data_from_ft_calculators.py <- class to crawl energy data (power or gas from the finanztip power calculators)
     │   │
     │   ├── features       <- Scripts to turn raw data into features for modeling
     │   │   └── build_features.py
