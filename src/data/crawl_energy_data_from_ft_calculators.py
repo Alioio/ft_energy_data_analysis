@@ -13,6 +13,7 @@ import pandas as pd
 from lxml import etree
 import re
 from datetime import datetime
+from collections import deque
 
 class FT_calculators_energy_data_crawler:
     def __init__(self, energy_type='electricity', consumption=3000, plz_list=[73033]):
@@ -22,7 +23,7 @@ class FT_calculators_energy_data_crawler:
         self.chrome_options = Options()
         self.chrome_options.headless = True
         self.every_plz_df = pd.DataFrame()
-        self.plz_list = plz_list
+        self.plz_list = deque(plz_list)
 
     def init_parameters(self):
         gas_url = 'https://www.finanztip.de/gaspreisvergleich/'
@@ -33,12 +34,12 @@ class FT_calculators_energy_data_crawler:
         x_path_electricity_regularity = '//*[@id="c84995"]/div/section/form/div[2]/div[2]/div[1]/div[3]/label'
 
         # plz:
-        x_path_gas_plz = '//*[@id="c84990"]/div/section/form/div[2]/div[1]/div[1]/div/div[2]/input'
+        x_path_gas_plz =         '//*[@id="c84990"]/div/section/form/div[2]/div[1]/div[1]/div/div[2]/input'
         x_path_electricity_plz = '//*[@id="c84995"]/div/section/form/div[2]/div[1]/div[1]/div/div[2]/input'
 
         # plz error:
-        x_path_gas_plzerror = '//*[@id="c84990"]/div/section/form/div[2]/div[1]/div[1]/div/div[2]/div'
-        x_path_electricity_plzerror = '//*[@id="c84995]/div/section/form/div[2]/div[1]/div[1]/div/div[2]/div'
+        x_path_gas_plzerror =         '//*[@id="c84990"]/div/section/form/div[2]/div[1]/div[1]/div/div[2]/div'
+        x_path_electricity_plzerror = '//*[@id="c84995"]/div/section/form/div[2]/div[1]/div[1]/div/div[2]/div'
 
         # consumption:
         x_path_gas_consumption = '//*[@id="gas-tool-calculator__yearly-consumption"]'
@@ -116,7 +117,7 @@ class FT_calculators_energy_data_crawler:
         #speichere alle ergebnisse
         for resultsite, place in zip(result_sites, places):
             all_items   = resultsite.find_all('div',attrs={'class':"result-item"})
-            #print('all items: ',len(all_items),' ',place,'  ',plzz)
+            #print('all items: ',len(all_items),' ',place,'  ',plzz,'   ',place)
 
             grundpreis = [self.remove_tags(item.find('span', string=[re.compile("^[0-9][\.]?[0-9]*,[0-9]*.*€/Jahr$")]).get_text()) for item in all_items]
             kwh_price = [self.remove_tags(item.find('span', string=[re.compile("^[0-9][\.]?[0-9]*,[0-9]*.*ct/kWh$")]).get_text()) for item in all_items]
@@ -209,101 +210,119 @@ class FT_calculators_energy_data_crawler:
     def crawl_engergy_data(self):
         counter = 0
         driver = webdriver.Chrome('C:\chrome\chromedriver.exe', options=self.chrome_options)
-        for plz_index, plzz in enumerate(self.plz_list):
-            counter += 1
-            print('CURRENT PLZ: ',counter)
-            result_sites = []
-            places = []
 
-            options = None
-            driver = webdriver.Chrome('C:\chrome\chromedriver.exe', options=self.chrome_options)
-            driver.implicitly_wait(20)
-            driver.get(self.parameters['url'])
- 
-            time.sleep(3)
-
-            if(plz_index == 0):
-                if(self.check_exists_by_xpath('//*[@id="cmpwelcomebtnyes"]/a', driver)):
-                    print('accepting all cookies')
-                    accept_cookies_btn = driver.find_element_by_xpath('//*[@id="cmpwelcomebtnyes"]/a')
-                    accept_cookies_btn.click()
-
-            regularity = driver.find_element_by_xpath(self.parameters['regularity'])
-            regularity.click()
-
-            plz = driver.find_element_by_xpath(self.parameters['plz'])                                       
-            plz.send_keys(plzz)
-
+        max_reties = 15
+        retries = 0
+        while self.plz_list:
             try:
-                plz_error =  WebDriverWait(driver, 1.5).until(
-                                EC.element_to_be_clickable((By.XPATH, self.parameters['plz_error']))
-                                )
-            except:
-                plz_error = None
+                plzz = self.plz_list.popleft()
+                counter += 1
+                print('CURRENT PLZ: ',counter)
+                result_sites = []
+                places = []
 
-            if(plz_error != None):
-                print('PLZ invalid: ',plzz)
-                continue   
+                options = None
+                driver = webdriver.Chrome('C:\chrome\chromedriver.exe', options=self.chrome_options)
+                driver.implicitly_wait(15)
+                driver.get(self.parameters['url'])
+    
+                time.sleep(2)
 
-            #überprüfe ob xpath place existiert?
-            options = driver.find_element_by_class_name('zipcode__city')
-            d = Select(options)
-            options = d.options
+                if(counter == 1):
+                    if(self.check_exists_by_xpath('//*[@id="cmpwelcomebtnyes"]/a', driver)):
+                        print('accepting all cookies')
+                        accept_cookies_btn = driver.find_element_by_xpath('//*[@id="cmpwelcomebtnyes"]/a')
+                        accept_cookies_btn.click()
 
-            if(len(options) > 0):  
-                for i, option in enumerate(options):
-                    if(i > 0):
-                        places.append(option.text)
-                        option.click()
-                        time.sleep(3)
+                regularity = driver.find_element_by_xpath(self.parameters['regularity'])
+                regularity.click()
 
-                        consumption = driver.find_element_by_xpath(self.parameters['consumption'])
-                        consumption.clear()
-                        consumption.send_keys(self.consumption)
+                plz = driver.find_element_by_xpath(self.parameters['plz'])                                       
+                plz.send_keys(plzz)
 
-                        submitbtn = driver.find_element_by_xpath(self.parameters['submitbtn'])
-                        submitbtn.click()
+                try:
+                    plz_error =  WebDriverWait(driver, 1.5).until(
+                                    EC.element_to_be_clickable((By.XPATH, self.parameters['plzerror']))
+                                    )
+                except:
+                    plz_error = None
 
-                        wait_until_result_page = driver.find_element_by_xpath(self.parameters['result_page'])
+                if(plz_error != None):
+                    print('PLZ invalid: ',plzz)
+                    continue   
 
-                        result_site = BeautifulSoup(driver.page_source, 'html.parser')
-                        result_sites.append(result_site)
-            else:
-                places.append(plzz)
+                #überprüfe ob xpath place existiert?
+                options = driver.find_element_by_class_name('zipcode__city')
+                d = Select(options)
+                options = d.options
 
-                consumption = driver.find_element_by_xpath(self.parameters['consumption'])
-                consumption.clear()
-                consumption.send_keys(self.consumption)
+                if(len(options) > 0):  
+                    for i, option in enumerate(options):
+                        if(i > 0):
+                            places.append(option.text)
+                            option.click()
+                            time.sleep(2)
 
-                submitbtn = driver.find_element_by_xpath(self.parameters['submitbtn'])
-                submitbtn.click()
+                            consumption = driver.find_element_by_xpath(self.parameters['consumption'])
+                            consumption.clear()
+                            consumption.send_keys(self.consumption)
 
-                wait_until_result_page = driver.find_element_by_xpath(self.parameters['result_page'])
+                            submitbtn = driver.find_element_by_xpath(self.parameters['submitbtn'])
+                            submitbtn.click()
 
-                result_site = BeautifulSoup(driver.page_source, 'html.parser')   
-                result_sites.append(result_site)
-            
-            
-            #Seite ist ausgelesen nun packe alle tarife eines plz in df        
-            driver.close()
-            self.save_result_pages_to_df(result_sites, places, plzz)
+                            wait_until_result_page = driver.find_element_by_xpath(self.parameters['result_page'])
+
+                            result_site = BeautifulSoup(driver.page_source, 'html.parser')
+                            result_sites.append(result_site)
+                else:
+                    places.append(plzz)
+
+                    consumption = driver.find_element_by_xpath(self.parameters['consumption'])
+                    consumption.clear()
+                    consumption.send_keys(self.consumption)
+
+                    submitbtn = driver.find_element_by_xpath(self.parameters['submitbtn'])
+                    submitbtn.click()
+
+                    wait_until_result_page = driver.find_element_by_xpath(self.parameters['result_page'])
+
+                    result_site = BeautifulSoup(driver.page_source, 'html.parser')   
+                    result_sites.append(result_site)
+                
+                
+                #Seite ist ausgelesen nun packe alle tarife eines plz in df        
+                driver.close()
+                
+                self.save_result_pages_to_df(result_sites, places, plzz)
+            except: 
+                retries +=1 
+
+                if(retries < max_reties):
+                    result_sites = []
+                    places = []
+                    print('error ', plzz)
+                    self.plz_list.append(plzz)
+                    continue
+                else:
+                    print('max retires reached')
+                    
         self.safe_data()
     
-
     def safe_data(self):
         now_ = datetime.now().strftime('%b %d %y %H_%M_%S')
         if(self.energy_type == 'electricity'):
             self.every_plz_df.to_csv('D:/ft_energy_data_analysis/data/raw/electricity/'+now_+'_electricity_1604.csv', index_label=False)
-        else:
+        elif(self.energy_type == 'gas'):
             self.every_plz_df.to_csv('D:/ft_energy_data_analysis/data/raw/gas/'+now_+'_gas_1604.csv', index_label=False)
-
+        else:
+            self.every_plz_df.to_csv('D:/ft_energy_data_analysis/data/raw/default/'+now_+'_default_1604.csv', index_label=False)
 
 plz_df = pd.read_excel('D:/ft_energy_data_analysis/src/data/Postleitzahlen_und_Versorgungsgebiete Strom.xlsx', converters={'PLZ':str,'Stadt/Gemeinde':str,'Stadt/Gemeinde':str, 'Versorgungsgebiet':str, 'Grundversorger':str}) 
 plzs = plz_df['PLZ'].to_list()
-crawler = FT_calculators_energy_data_crawler(energy_type='gas',plz_list=[73033, 12459])
+crawler = FT_calculators_energy_data_crawler(energy_type='gas',plz_list=plzs)
 crawler.crawl_engergy_data()
 print('Mit gas fertig!')                        
-crawler2 = FT_calculators_energy_data_crawler(energy_type='eletricity',plz_list=[73033, 12459])
+crawler2 = FT_calculators_energy_data_crawler(energy_type='electricity',plz_list=plzs)
 crawler2.crawl_engergy_data()
 print('Mit strom fertig!')
 
