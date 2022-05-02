@@ -2,7 +2,7 @@ ft_energy_data_analysis
 ==============================
 
 # Description 
-The goal of this project is to gain insights on the development of energy price data, including gas and electricity prices in Germany. For this purpose, this project provides methods for energy price data crawling, it provides feature descriptors and methods for transforming and modelling. 
+The goal of this project is to gain insights on the development of energy price data, including gas and electricity prices in Germany. For this purpose, this project provides methods for energy price data crawling, methods for preprocessing and clustering.  
 
 Project Organization
 ------------
