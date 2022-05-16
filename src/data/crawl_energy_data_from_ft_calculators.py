@@ -211,7 +211,7 @@ class FT_calculators_energy_data_crawler:
         counter = 0
         driver = webdriver.Chrome('C:\chrome\chromedriver.exe', options=self.chrome_options)
 
-        max_reties = 15
+        max_reties = 100
         retries = 0
         while self.plz_list:
             try:
@@ -288,8 +288,7 @@ class FT_calculators_energy_data_crawler:
 
                     result_site = BeautifulSoup(driver.page_source, 'html.parser')   
                     result_sites.append(result_site)
-                
-                
+                     
                 #Seite ist ausgelesen nun packe alle tarife eines plz in df        
                 driver.close()
                 
@@ -317,6 +316,8 @@ class FT_calculators_energy_data_crawler:
         else:
             self.every_plz_df.to_csv('D:/ft_energy_data_analysis/data/raw/default/'+now_+'_default_1604.csv', index_label=False)
 
+
+'''
 plz_df = pd.read_excel('D:/ft_energy_data_analysis/src/data/Postleitzahlen_und_Versorgungsgebiete Strom.xlsx', converters={'PLZ':str,'Stadt/Gemeinde':str,'Stadt/Gemeinde':str, 'Versorgungsgebiet':str, 'Grundversorger':str}) 
 plzs = plz_df['PLZ'].to_list()
 crawler = FT_calculators_energy_data_crawler(energy_type='gas',plz_list=plzs)
@@ -325,5 +326,4 @@ print('Mit gas fertig!')
 crawler2 = FT_calculators_energy_data_crawler(energy_type='electricity',plz_list=plzs)
 crawler2.crawl_engergy_data()
 print('Mit strom fertig!')
-
-
+'''
