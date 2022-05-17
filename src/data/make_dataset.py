@@ -18,7 +18,7 @@ class Data_preporsessor:
     def read_raw_data(self, filename='mostrecent'):
 
         if(filename=='mostrecent'):
-            list_of_files = glob.glob(ds_maker.inputpath+'/*') # * means all if need specific format then *.csv
+            list_of_files = glob.glob(self.inputpath+'/*.csv') # * means all if need specific format then *.csv
             latest_file = max(list_of_files, key=os.path.getctime)
             rawdata_filename = latest_file
 
@@ -64,7 +64,6 @@ class Data_preporsessor:
 
 
 ds_maker = Data_preporsessor()
-print('Raw data path: ',os.path.join(ds_maker.inputpath, 'May 07 22 14_15_51_gas_1604.csv'))
 
 ds_maker.read_raw_data()
 ds_maker.format_data()
