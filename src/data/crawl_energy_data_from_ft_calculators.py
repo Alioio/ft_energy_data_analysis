@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 from lxml import etree
 import re
+import os
 from datetime import datetime
 from collections import deque
 
@@ -317,8 +318,11 @@ class FT_calculators_energy_data_crawler:
             self.every_plz_df.to_csv('D:/ft_energy_data_analysis/data/raw/default/'+now_+'_default_1604.csv', index_label=False)
 
 
-'''
-plz_df = pd.read_excel('D:/ft_energy_data_analysis/src/data/Postleitzahlen_und_Versorgungsgebiete Strom.xlsx', converters={'PLZ':str,'Stadt/Gemeinde':str,'Stadt/Gemeinde':str, 'Versorgungsgebiet':str, 'Grundversorger':str}) 
+
+path = os.getcwd()
+plzfile_path = os.path.abspath(os.path.join(path, os.pardir+'\data\/external'+'\/Postleitzahlen_und_Versorgungsgebiete Strom.xlsx'))
+print(plzfile_path)
+plz_df = pd.read_excel(plzfile_path, converters={'PLZ':str,'Stadt/Gemeinde':str,'Stadt/Gemeinde':str, 'Versorgungsgebiet':str, 'Grundversorger':str}) 
 plzs = plz_df['PLZ'].to_list()
 crawler = FT_calculators_energy_data_crawler(energy_type='gas',plz_list=plzs)
 crawler.crawl_engergy_data()
@@ -326,4 +330,4 @@ print('Mit gas fertig!')
 crawler2 = FT_calculators_energy_data_crawler(energy_type='electricity',plz_list=plzs)
 crawler2.crawl_engergy_data()
 print('Mit strom fertig!')
-'''
+
