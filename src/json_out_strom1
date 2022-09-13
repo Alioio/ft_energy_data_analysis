@@ -1,0 +1,52 @@
+{
+  "99425": {
+    "location_id": [
+      "68834",
+      "68835",
+      "68836",
+      "68837",
+      "69036",
+      "69037",
+      "79652",
+      "81137",
+      "81901"
+    ],
+    "location": [
+      "Oberweimar",
+      "Parkvorstadt",
+      "Taubach",
+      "Tiefurt",
+      "Nordvorstadt",
+      "Sch\u00f6nblick",
+      "S\u00fcdstadt",
+      "S\u00fcdweststadt",
+      "S\u00fc\u00dfenborn"
+    ]
+  },
+  "49661": {
+    "location_id": [
+      "10415",
+      "10416",
+      "11008",
+      "11806",
+      "12158",
+      "12159",
+      "12943",
+      "12944",
+      "71771",
+      "71772"
+    ],
+    "location": [
+      "Bethen",
+      "Vahren",
+      "Stapelfeld",
+      "Schmertheim",
+      "Amb\u00fchren",
+      "Staatsforsten",
+      "Emstekerfeld",
+      "Kellerh\u00f6he",
+      "Cloppenburg",
+      "Lankum"
+    ]
+  }
+}

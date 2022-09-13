@@ -1,0 +1,24 @@
+{
+  "75382": {
+    "location_id": [
+      "1299",
+      "3717",
+      "70437"
+    ],
+    "location": [
+      "Ottenbronn",
+      "Althengstett",
+      "Neuhengstett"
+    ]
+  },
+  "71729": {
+    "location_id": [
+      "15753",
+      "50753"
+    ],
+    "location": [
+      "Erdmannhausen",
+      "Rundsm\u00fchlhof"
+    ]
+  }
+}

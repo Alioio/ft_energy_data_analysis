@@ -9,6 +9,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, RobustScaler, MinMaxScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
+from sklearn.cluster import KMeans
 
 class Feature_builder:
 
@@ -25,16 +26,16 @@ class Feature_builder:
             latest_file = max(list_of_files, key=os.path.getctime)
             data_filename = latest_file
 
-        self.data = pd.read_csv(data_filename, converters={'plz':float})
+        self.data = pd.read_csv(data_filename)
         self.data = self.data.sort_values(by='anbieter') 
         self.data['Oeko'] = self.data['Oeko'].astype(int)
 
     def standardize(self):
         # numerical features from the dataset
-        numerical_features = ['mean_grundpreis', 'mean_kwh_price', 'mindestlaufzeit_monate', 'preisgarantie_monate']
+        numerical_features = ['mean_grundpreis', 'mean_kwh_price']
 
         # categorical features from the dataset
-        categorical_features = ['Oeko']
+        categorical_features = ['Oeko', 'mindestlaufzeit_monate', 'preisgarantie_monate', 'price_category']
 
         numerical_transformer = Pipeline(steps=[
             ('imputer', SimpleImputer()),
@@ -57,9 +58,10 @@ class Feature_builder:
         data = { 
         'grundpreis_scaled': standardized_data[:,0], 
         'kwh_price_scaled':standardized_data[:,1], 
-        'mindestlaufzeit_monate_scaled':standardized_data[:,2],
-        'preisgarantie_monate_scaled':standardized_data[:,3],
-        'Oeko_scaled':standardized_data[:,4],
+        'Oeko_scaled':standardized_data[:,2],
+        'mindestlaufzeit_monate_scaled':standardized_data[:,3],
+        'preisgarantie_monate_scaled':standardized_data[:,4],
+        'price_category':standardized_data[:,5],
         }
 
         self.standardized_data = pd.DataFrame(data)
@@ -70,12 +72,19 @@ class Feature_builder:
 
         self.standardized_data.to_csv(os.path.join(self.outputpath,now_+'_standardized_'+self.energy_type+'.csv'), index_label=False)
 
+    def categorize_with_kmeans(self,columns=['mean_grundpreis', 'mean_kwh_price'], n_clusters =3):
+        clusterer = KMeans(n_clusters=n_clusters, random_state=100)
+        cluster_labels = clusterer.fit_predict(self.data[columns])
+        self.data['price_category'] = cluster_labels
+
+
 
 feature_builder = Feature_builder()
 feature_builder.load_data()
 
 print(feature_builder.data.head())
 
+feature_builder.categorize_with_kmeans()
 feature_builder.standardize()
 
 print(feature_builder.standardized_data)

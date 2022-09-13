@@ -1,0 +1,30 @@
+{
+  "73033": {
+    "location_id": [
+      "20437",
+      "24174"
+    ],
+    "location": [
+      "Stadtgebiet",
+      "Faurndau"
+    ]
+  },
+  "12459": {
+    "location_id": [
+      "5736",
+      "6269",
+      "6628",
+      "7317",
+      "81335",
+      "83010"
+    ],
+    "location": [
+      "Siedl. Oberspree K\u00f6penick",
+      "KGA Am Freibad",
+      "Obersch\u00f6neweide",
+      "KGA Gr\u00fcne Aue",
+      "KGA Wilhelmstrand",
+      "KGA Gartenfreunde Wuhlheide"
+    ]
+  }
+}

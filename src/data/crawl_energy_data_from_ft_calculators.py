@@ -317,8 +317,6 @@ class FT_calculators_energy_data_crawler:
         else:
             self.every_plz_df.to_csv('D:/ft_energy_data_analysis/data/raw/default/'+now_+'_default_1604.csv', index_label=False)
 
-
-
 path = os.getcwd()
 plzfile_path = os.path.abspath(os.path.join(path, os.pardir+'\data\/external'+'\/Postleitzahlen_und_Versorgungsgebiete Strom.xlsx'))
 print(plzfile_path)

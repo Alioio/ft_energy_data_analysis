@@ -1,0 +1,676 @@
+{
+  "75382": {
+    "location_id": [
+      "1299",
+      "3717",
+      "70437"
+    ],
+    "location": [
+      "Ottenbronn",
+      "Althengstett",
+      "Neuhengstett"
+    ]
+  },
+  "71729": {
+    "location_id": [
+      "15753",
+      "50753"
+    ],
+    "location": [
+      "Erdmannhausen",
+      "Rundsm\u00fchlhof"
+    ]
+  },
+  "69151": {
+    "location_id": [
+      "39324",
+      "40490",
+      "42420",
+      "42421",
+      "75999"
+    ],
+    "location": [
+      "Waldhilsbach",
+      "Kleingem\u00fcnd",
+      "M\u00fcckenloch",
+      "Neckargem\u00fcnd",
+      "Dilsberg"
+    ]
+  },
+  "97348": {
+    "location_id": [
+      "38454",
+      "67356",
+      "67357",
+      "67876",
+      "77497",
+      "77498"
+    ],
+    "location": [
+      "Markt Einersheim",
+      "Markt Herrnsheim",
+      "Willanzheim",
+      "H\u00fcttenheim",
+      "Fr\u00f6hstockheim",
+      "R\u00f6delsee"
+    ]
+  },
+  "63931": {
+    "location_id": [
+      "false"
+    ],
+    "location": [
+      "63931"
+    ]
+  },
+  "94362": {
+    "location_id": [
+      "false"
+    ],
+    "location": [
+      "94362"
+    ]
+  },
+  "84184": {
+    "location_id": [
+      "false"
+    ],
+    "location": [
+      "84184"
+    ]
+  },
+  "84034": {
+    "location_id": [
+      "32695",
+      "33711",
+      "35523"
+    ],
+    "location": [
+      "M\u00fcnchnerau",
+      "Nikola",
+      "West"
+    ]
+  },
+  "86485": {
+    "location_id": [
+      "6440",
+      "6716",
+      "7033",
+      "8086",
+      "8087"
+    ],
+    "location": [
+      "Feigenhofen",
+      "Eisenbrechtshofen",
+      "Markt",
+      "Affaltern",
+      "Biberbach"
+    ]
+  },
+  "85356": {
+    "location_id": [
+      "15631",
+      "18389",
+      "18390",
+      "18391",
+      "18489",
+      "18490",
+      "19804",
+      "20105",
+      "39263",
+      "72853"
+    ],
+    "location": [
+      "Neustift",
+      "Brandau",
+      "Gemeinde Marzling",
+      "Lerchenfeld",
+      "Erlau",
+      "T\u00fcntenhausen",
+      "Altenhausen",
+      "Freising",
+      "M\u00fcnchen-Flughafen",
+      "Attaching"
+    ]
+  },
+  "99438": {
+    "location_id": [
+      "2169",
+      "3026",
+      "3027",
+      "3028",
+      "3029",
+      "3030",
+      "3625",
+      "5412",
+      "10296",
+      "25341",
+      "43463",
+      "59012",
+      "64014",
+      "70712",
+      "81578"
+    ],
+    "location": [
+      "B\u00f6ttelborn",
+      "Bad Berka",
+      "Meckfeld",
+      "Schoppendorf",
+      "Tannroda",
+      "Tiefengruben",
+      "Bergern",
+      "Kottendorf",
+      "Buchfart",
+      "Hetschburg",
+      "Oettern",
+      "Tonndorf",
+      "Vollersroda",
+      "M\u00fcnchen",
+      "Gutendorf"
+    ]
+  },
+  "35080": {
+    "location_id": [
+      "2861",
+      "2862",
+      "2863",
+      "4212",
+      "4332",
+      "4333",
+      "6102",
+      "70754"
+    ],
+    "location": [
+      "Bottenhorn",
+      "Dernbach",
+      "Hartenrod",
+      "Schlierbach",
+      "Bad Endbach",
+      "H\u00fclshof",
+      "Wommelshausen",
+      "G\u00fcnterod"
+    ]
+  },
+  "63619": {
+    "location_id": [
+      "false"
+    ],
+    "location": [
+      "63619"
+    ]
+  },
+  "63165": {
+    "location_id": [
+      "38035",
+      "39875",
+      "42541"
+    ],
+    "location": [
+      "M\u00fchlheim",
+      "L\u00e4mmerspiel",
+      "Dietesheim"
+    ]
+  },
+  "14728": {
+    "location_id": [
+      "21931",
+      "22030",
+      "28949",
+      "48752",
+      "49192",
+      "74644",
+      "74645"
+    ],
+    "location": [
+      "St\u00f6lln",
+      "Sch\u00f6nholz-Neuwerder",
+      "G\u00f6rne",
+      "Rhinow",
+      "Kietz",
+      "Dickte",
+      "Kle\u00dfen"
+    ]
+  },
+  "18465": {
+    "location_id": [
+      "10884",
+      "14259",
+      "15011",
+      "27020",
+      "28008",
+      "59723",
+      "60722",
+      "64220",
+      "64221",
+      "72105",
+      "79023"
+    ],
+    "location": [
+      "Werder",
+      "Katzenow",
+      "Krakow",
+      "R\u00f6nkendorf",
+      "Hugoldsdorf",
+      "Stremlow",
+      "Rekentin",
+      "Siemersdorf",
+      "Tribsees",
+      "Drechow",
+      "Landsdorf"
+    ]
+  },
+  "18230": {
+    "location_id": [
+      "5843",
+      "27604",
+      "29910",
+      "38248",
+      "64372",
+      "66166",
+      "69161",
+      "82953",
+      "82954",
+      "82955",
+      "82956",
+      "82957",
+      "82958",
+      "82959",
+      "82960",
+      "82961",
+      "84527",
+      "84528",
+      "84529",
+      "84530",
+      "84531",
+      "84532",
+      "84533",
+      "84534",
+      "84535",
+      "84536",
+      "84537",
+      "84538",
+      "84539"
+    ],
+    "location": [
+      "Bastorf",
+      "Hohen Niendorf",
+      "K\u00e4gsdorf",
+      "Mechelsdorf",
+      "Wendelstorf",
+      "Westhof",
+      "Zweedorf",
+      "Blengow",
+      "Gaarzer Hof",
+      "Garvsm\u00fchlen",
+      "Meschendorf",
+      "Meschendorf Zeltplatz",
+      "Ostseebad Rerik Zeltplatz",
+      "Rerik",
+      "Roggow",
+      "Russow",
+      "Biendorf",
+      "B\u00fcttelkow",
+      "Dorf J\u00f6rnstorf",
+      "Gersdorf",
+      "Hof J\u00f6rnstorf",
+      "K\u00f6rchow",
+      "Lehnenhof",
+      "Parchow",
+      "Sandhagen",
+      "Sandhagen Abbau",
+      "Uhlenbrook",
+      "Westenbr\u00fcgge",
+      "Wischuer"
+    ]
+  },
+  "08340": {
+    "location_id": [
+      "53623",
+      "54635",
+      "54636",
+      "55524",
+      "55797",
+      "55798"
+    ],
+    "location": [
+      "Erla",
+      "J\u00e4gerhaus",
+      "Schwarzenberg",
+      "Gr\u00fcnst\u00e4dtel",
+      "Bermsgr\u00fcn",
+      "P\u00f6hla"
+    ]
+  },
+  "04769": {
+    "location_id": [
+      "38020",
+      "38021",
+      "38879",
+      "38880",
+      "38881",
+      "38972",
+      "38973",
+      "39233",
+      "39313",
+      "39315",
+      "39453",
+      "39714",
+      "41681",
+      "41682",
+      "42419",
+      "42526",
+      "42527",
+      "75886",
+      "75887",
+      "81809",
+      "82640",
+      "82641",
+      "82642",
+      "82643",
+      "82644",
+      "82645",
+      "82646",
+      "82647",
+      "82648",
+      "82649",
+      "82650",
+      "82651",
+      "82652",
+      "82653",
+      "82654",
+      "82655",
+      "82656",
+      "82657",
+      "85442",
+      "85443",
+      "85444",
+      "85445",
+      "85446",
+      "85447"
+    ],
+    "location": [
+      "Mahris",
+      "Schweta",
+      "Hohenwussen",
+      "Naundorf",
+      "Stennsch\u00fctz",
+      "M\u00fcgeln",
+      "Wetitz",
+      "Zschannewitz",
+      "Casabra",
+      "Neu-Casabra",
+      "Niedergoseln",
+      "Gastewitz",
+      "Grauschwitz",
+      "L\u00fcttnitz",
+      "Zeicha",
+      "Berntitz",
+      "Ockritz",
+      "Oetzsch",
+      "Schlanzschwitz",
+      "Kreina",
+      "Abla\u00df",
+      "Baderitz",
+      "Gaudlitz",
+      "Glossen",
+      "Kemmlitz",
+      "Lichteneichen",
+      "Nebitzschen",
+      "Neubaderitz",
+      "Neusornzig",
+      "Paschkowitz",
+      "Pommlitz",
+      "Poppitz",
+      "Querbitzsch",
+      "Remsa",
+      "Schleben",
+      "Seelitz",
+      "Sornzig",
+      "Z\u00e4vertitz",
+      "Haage",
+      "Hof",
+      "Nasenberg",
+      "Raitzen",
+      "Reppen",
+      "Salbitz"
+    ]
+  },
+  "38829": {
+    "location_id": [
+      "false"
+    ],
+    "location": [
+      "38829"
+    ]
+  },
+  "28203": {
+    "location_id": [
+      "8037",
+      "8538",
+      "9409"
+    ],
+    "location": [
+      "Fesenfeld",
+      "Steintor",
+      "Ostertor"
+    ]
+  },
+  "12629": {
+    "location_id": [
+      "false"
+    ],
+    "location": [
+      "12629"
+    ]
+  },
+  "22459": {
+    "location_id": [
+      "23241",
+      "26745"
+    ],
+    "location": [
+      "Schnelsen",
+      "Niendorf"
+    ]
+  },
+  "66564": {
+    "location_id": [
+      "44436",
+      "48102",
+      "48103",
+      "76697",
+      "76698"
+    ],
+    "location": [
+      "Ottweiler",
+      "F\u00fcrth",
+      "Lautenbach",
+      "Mainzweiler",
+      "Steinbach"
+    ]
+  },
+  "56307": {
+    "location_id": [
+      "11223",
+      "12338",
+      "13565",
+      "15071",
+      "24440"
+    ],
+    "location": [
+      "Dernbach",
+      "Muscheid",
+      "Daufenbach",
+      "Werlenbach",
+      "Harschbach"
+    ]
+  },
+  "54441": {
+    "location_id": [
+      "27409",
+      "30544",
+      "31382",
+      "33041",
+      "36206",
+      "44157",
+      "54712",
+      "59409",
+      "60698",
+      "62853",
+      "64964",
+      "65437",
+      "70681",
+      "74437"
+    ],
+    "location": [
+      "Kastel-Staadt",
+      "Meurich",
+      "Beuren",
+      "Kirf",
+      "Mannebach",
+      "Ockfen",
+      "Schoden",
+      "Taben-Rodt",
+      "Trassem",
+      "Temmels",
+      "Wawern",
+      "Wellen",
+      "Ayl",
+      "Kanzem"
+    ]
+  },
+  "67126": {
+    "location_id": [
+      "26056",
+      "29098"
+    ],
+    "location": [
+      "Assenheim",
+      "Hochdorf"
+    ]
+  },
+  "67271": {
+    "location_id": [
+      "5482",
+      "29497",
+      "31761",
+      "37160",
+      "44073",
+      "76487"
+    ],
+    "location": [
+      "Battenberg",
+      "Kindenheim",
+      "Kleinkarlbach",
+      "Mertesheim",
+      "Neuleiningen",
+      "Obers\u00fclzen"
+    ]
+  },
+  "55263": {
+    "location_id": [
+      "false"
+    ],
+    "location": [
+      "55263"
+    ]
+  },
+  "23847": {
+    "location_id": [
+      "9721",
+      "15048",
+      "22376",
+      "22779",
+      "27434",
+      "32738",
+      "36443",
+      "47431",
+      "50202",
+      "53019",
+      "56183",
+      "58889",
+      "59062",
+      "69451",
+      "77892",
+      "78571"
+    ],
+    "location": [
+      "Bliestorf",
+      "D\u00fcchelsdorf",
+      "Grinau",
+      "Gro\u00df Boden",
+      "Kastorf",
+      "Lasbek",
+      "Meddewade",
+      "P\u00f6litz",
+      "Rethwisch",
+      "Sch\u00fcrens\u00f6hlen",
+      "Sierksrade",
+      "Stubben",
+      "Siebenb\u00e4umen",
+      "Westerau",
+      "Schiphorst",
+      "Steinhorst"
+    ]
+  },
+  "22848": {
+    "location_id": [
+      "42900",
+      "76326"
+    ],
+    "location": [
+      "Harksheide",
+      "Garstedt"
+    ]
+  },
+  "24646": {
+    "location_id": [
+      "false"
+    ],
+    "location": [
+      "24646"
+    ]
+  },
+  "25938": {
+    "location_id": [
+      "8756",
+      "37214",
+      "42823",
+      "44183",
+      "44881",
+      "58491",
+      "61251",
+      "67528",
+      "68114",
+      "70023",
+      "70365",
+      "72158"
+    ],
+    "location": [
+      "Borgsum",
+      "Midlum",
+      "Nieblum",
+      "Oevenum",
+      "Oldsum",
+      "S\u00fcderende",
+      "Utersum",
+      "Witsum",
+      "Wyk",
+      "Wrixum",
+      "Alkersum",
+      "Dunsum"
+    ]
+  },
+  "68305": {
+    "location_id": [
+      "35922",
+      "38422",
+      "39509"
+    ],
+    "location": [
+      "Luzenberg",
+      "Waldhof",
+      "Gartenstadt"
+    ]
+  }
+}
