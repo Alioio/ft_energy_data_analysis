@@ -275,6 +275,7 @@ class FT_calculators_energy_data_crawler:
 
                             result_site = BeautifulSoup(driver.page_source, 'html.parser')
                             result_sites.append(result_site)
+                            break
                 else:
                     places.append(plzz)
 
@@ -286,14 +287,16 @@ class FT_calculators_energy_data_crawler:
                     submitbtn.click()
 
                     wait_until_result_page = driver.find_element_by_xpath(self.parameters['result_page'])
-
+                    time.sleep(20)
+                    driver.save_screenshot(str(plzz)+'ss.png')   
                     result_site = BeautifulSoup(driver.page_source, 'html.parser')   
                     result_sites.append(result_site)
                      
-                #Seite ist ausgelesen nun packe alle tarife eines plz in df        
+                #Seite ist ausgelesen nun packe alle tarife eines plz in df     
+            
                 driver.close()
                 
-                self.save_result_pages_to_df(result_sites, places, plzz)
+                #self.save_result_pages_to_df(result_sites, places, plzz)
             except: 
                 retries +=1 
 
@@ -318,7 +321,7 @@ class FT_calculators_energy_data_crawler:
             self.every_plz_df.to_csv('D:/ft_energy_data_analysis/data/raw/default/'+now_+'_default_1604.csv', index_label=False)
 
 path = os.getcwd()
-plzfile_path = os.path.abspath(os.path.join(path, os.pardir+'\data\/external'+'\/Postleitzahlen_und_Versorgungsgebiete Strom.xlsx'))
+plzfile_path = os.path.abspath(os.path.join(path, 'test_plz.xlsx'))
 print(plzfile_path)
 plz_df = pd.read_excel(plzfile_path, converters={'PLZ':str,'Stadt/Gemeinde':str,'Stadt/Gemeinde':str, 'Versorgungsgebiet':str, 'Grundversorger':str}) 
 plzs = plz_df['PLZ'].to_list()
