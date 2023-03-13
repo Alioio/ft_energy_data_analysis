@@ -1,0 +1,157 @@
+import numpy as np
+import pandas as pd
+from sklearn.impute import SimpleImputer
+from datetime import datetime
+import os
+import glob
+import re
+
+# Start from the current working directory
+
+def find_project_root_path():
+    current_dir = os.getcwd()
+    # Traverse up the directory hierarchy until we find the directory containing README.md
+    while True:
+        if os.path.exists(os.path.join(current_dir, 'README.md')):
+            return current_dir
+        else:
+            # Move up one directory level
+            current_dir = os.path.dirname(current_dir)
+            
+PROJECT_ROOT_PATH= find_project_root_path
+DATA_SOURCE_PATH = os.path.join(PROJECT_ROOT_PATH, 'data', 'interim')
+DATA_DESTINATION_PATH = os.path.join(PROJECT_ROOT_PATH, 'data', 'processed')
+
+class TimeDataSummarizer:
+    """
+    A class for analyzing and summarizing tariff data.
+
+    Parameters:
+    -----------
+    data : pandas DataFrame
+        The tariff data to analyze.
+
+    variables_dict : dict
+        A dictionary that maps variable names to their descriptions.
+
+    Methods:
+    --------
+    analyze(separation_var, selection_short, selection_long, top_n, selected_variable)
+        Computes a summary of the tariff data based on the given parameters.
+
+    _compute_summary(data, variable, description, suffix='')
+        Computes a summary of the given data for the given variable.
+
+    _get_top_n(data, top_n)
+        Returns the top N rows of the given data.
+    """
+    def __init__(self, dataset):
+        self.dataset = dataset
+        
+    def filter_contract_duration(self, max_duration=24):
+        self.dataset = self.dataset[self.dataset['contractDurationNormalized'] <= max_duration]
+        
+    def set_common_carrier(self):
+        mask = (self.dataset['commoncarrier'] == 'no') & \
+               (self.dataset['tariffName'].str.lower().str.contains('grundversorgung') | self.dataset['tariffName'].str.lower().str.contains('ersatzversorgung'))
+        self.dataset.loc[mask, 'commoncarrier'] = 'yes'
+        
+    def filter_recommended_tariffs(self):
+        self.dataset = self.dataset[self.dataset['priceGuaranteeNormalized'] >= self.dataset['contractDurationNormalized']]
+
+    def separate_and_summarize_time_series(self, seperation_dict, top_n, selected_variable):
+        seperation_var = seperation_dict['seperation_variable']
+
+        summary = pd.DataFrame()
+        summary_all = pd.DataFrame()
+
+        for sep_value in seperation_dict['sepration_values']:
+            print(sep_value,'\n')
+            print(seperation_dict['sepration_values'][sep_value])
+            
+
+            data_1 = self.dataset[self.dataset[seperation_var].isin(seperation_dict['sepration_values'][sep_value])]
+            data_1_all = data_1.copy()
+            top_n_1 = self._get_top_n(data_1, top_n, selected_variable)
+            summary_1 = self._compute_summary(top_n_1, selected_variable, sep_value)
+            summary_1_all = self._compute_summary(data_1_all, selected_variable, sep_value, suffix='_all')
+    
+            summary = pd.concat([summary, summary_1])
+            print(summary.columns)
+            summary_all = pd.concat([summary_all, summary_1_all])
+            
+        summary = pd.concat([summary, summary_all], axis=1)
+        #summary = pd.merge(summary, summary_all, left_index=True, right_index=True)
+        summary = summary.reset_index(drop=True).copy()
+        return summary
+    
+    def _compute_summary(self, data, variable, description, suffix=''):
+        agg_functions = {
+            variable:
+            [ 'mean', 'median','std', 'min', 'max', 'count']
+        }
+        
+        summary = data[ ['date','providerName','tariffName','signupPartner', variable]].groupby(['date']).agg(agg_functions)
+        summary.columns =  [ 'mean'+suffix, 'median'+suffix,'std'+suffix, 'min'+suffix, 'max'+suffix, 'count'+suffix]
+        summary['date'] = summary.index
+        summary['beschreibung'] = description
+        return summary
+    
+    def _get_top_n(self, data, top_n, selected_variable):
+        if top_n == 'Alle':
+            return data
+        else:
+            data = data.sort_values(['date', 'plz', selected_variable], ascending=[True, True, True])
+            data['rank'] = 1
+            data['rank'] = data.groupby(['date', 'plz'])['rank'].cumsum()
+            data = data[data['rank'] <= int(top_n)]
+            return data
+
+
+seperation_by_priceguarantee = {'seperation_variable':'priceGuaranteeNormalized',
+               'sepration_values':{
+               'Kurze Preisgarantie':[0, 1, 2, 3, 4, 5, 6, 7 ,8, 9, 10, 11, 12],
+               'Lange Preisgarantie':[13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]}
+               }
+
+seperation_by_tariff_type = {'seperation_variable':'commoncarrier',
+               'sepration_values':{
+               'Gundversorgung':['yes'],
+               'Sondertarife':['no']}
+               }
+
+seperation_vars = {'Preisgarantie':seperation_by_priceguarantee, 'Grundversorgung':seperation_by_tariff_type}
+energy_types = ['gas', 'electricity']
+consumptions = {'gas': ['9000', '15000'], 'electricity': ['1300', '3000']}
+
+for energy_type in energy_types:
+    for consumption in consumptions[energy_type]:
+
+        source_path = os.path.join(DATA_SOURCE_PATH,energy_type,consumption)
+        # get a list of all files in the directory sorted by modification time
+        list_of_files = glob.glob(source_path + "/*")
+        sorted_list_of_files = sorted(list_of_files, key=os.path.getmtime)
+        # get the filename of the newest file
+        newest_file = sorted_list_of_files[-1]
+        newest_filename = os.path.basename(newest_file)
+
+        # 0) Load data from interim folder and remove duplicates
+        filepath = os.path.join(source_path, newest_filename)
+        df = pd.read_csv(filepath,low_memory=False)
+        df = df.drop_duplicates(['date', 'providerName', 'tariffName', 'signupPartner', 'plz', 'dataeco', 'datatotal'])
+
+        # 1) filter for only from finanztip recommended contracts: contractDurationNormalized <= 24 & priceGuratanteeNormalized >= contractDurationNormalized
+        summarizer = TimeDataSummarizer(dataset=df)
+        summarizer.filter_contract_duration(24)
+        summarizer.filter_recommended_tariffs()
+
+        # 2)checking tariffname for the terms grundversorgung or ersatzversorgung and append commoncarrier
+        summarizer.set_common_carrier()
+
+        for seperation_var in seperation_vars:
+            print(energy_type,'   ',consumption,'   ',seperation_var,'   ',seperation_vars[seperation_var])
+            summary_price_guarantee = summarizer.separate_and_summarize_time_series(seperation_vars[seperation_var], 3, 'kwh_price')
+            destination_path = os.path.join(DATA_DESTINATION_PATH, energy_type, consumption)
+            now_ = datetime.now().strftime('%b %d %y %H_%M_%S')
+            destination_file_name = now_+'_'+seperation_var+'_'+energy_type+'_'+consumption+'.csv'
+            summary_price_guarantee[['date','median', 'beschreibung']].to_csv(os.path.join(destination_path, destination_file_name), index_label=False)
